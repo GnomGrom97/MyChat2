@@ -19,7 +19,7 @@ import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
 /** обновляю версию до 34  с 33*/
-/***/
+/**перешел на 11 java in project structure*/
 
 
 class MainActivity : AppCompatActivity() {
