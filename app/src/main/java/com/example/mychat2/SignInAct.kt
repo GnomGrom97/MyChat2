@@ -42,7 +42,7 @@ class SignInAct : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
-        binding= ActivitySignInBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
         //В методе onCreate вашего действия входа в систему получите общий экземпляр объекта FirebaseAuth:
 
