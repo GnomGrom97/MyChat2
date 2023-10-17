@@ -18,6 +18,9 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
+/** обновляю версию до 34  с 33*/
+/***/
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
