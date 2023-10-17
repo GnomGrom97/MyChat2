@@ -21,6 +21,7 @@ import org.w3c.dom.Text
 /** обновляю версию до 34  с 33*/
 /**перешел на 11 java in project structure*/
 /**изменил версию котлин в уровне проекта на 1.7.1, была больше 1.7.20 кажется**/
+//запустил синхрон грандла
 
 
 class MainActivity : AppCompatActivity() {
