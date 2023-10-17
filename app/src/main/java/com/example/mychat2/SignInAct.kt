@@ -125,8 +125,8 @@ class SignInAct : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
         textView=findViewById(R.id.singInWithGoogle)
-        val options= GoogleSignInOptions.
-        Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        val options= GoogleSignInOptions
+            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
@@ -158,7 +158,7 @@ class SignInAct : AppCompatActivity() {
                 }
         }
     }
-
+//перебрасывает пользователя сразу в чат, если он зарегистрирован
     override fun onStart() {
         super.onStart()
         if (FirebaseAuth.getInstance().currentUser != null) {
