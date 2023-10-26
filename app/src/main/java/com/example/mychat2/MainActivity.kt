@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         auth=Firebase.auth
         setActionBar()// запуск после аутентификации
         val database = Firebase.database
-        val myRef = database.getReference("сообщения")
+        val myRef = database.getReference("message")
         binding.bSend.setOnClickListener {
             //при нажатии на кнопку будет записываться в бд
             //данные из текстового поля превратили в стринг
@@ -93,9 +93,9 @@ class MainActivity : AppCompatActivity() {
                     //запуск картинки проекта
                     ab?.setDisplayHomeAsUpEnabled(true)
                     ab?.setHomeAsUpIndicator(dIcon)
-                    ab?.title = auth.currentUser?.displayName
+                   ab?.title = auth.currentUser?.displayName
+
                 }
             }.start()
-
         }
 }

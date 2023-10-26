@@ -127,7 +127,7 @@ class SignInAct : AppCompatActivity() {
         textView=findViewById(R.id.singInWithGoogle)
         val options= GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken("420272150873-92ppv3pl173cbrhca17tsnghgmh0lbhv.apps.googleusercontent.com")
             .requestEmail()
             .build()
 
