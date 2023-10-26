@@ -4,6 +4,7 @@ import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
 import com.example.mychat2.databinding.ActivityMainBinding
 import com.example.mychat2.databinding.ActivitySignInBinding
@@ -51,8 +52,15 @@ class MainActivity : AppCompatActivity() {
     }
 /** функция выведения меню на экран*/
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return super.onCreateOptionsMenu(menu)
     menuInflater.inflate(R.menu.main_menu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    /** function log out**/
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.sign_out){
+            auth.signOut()
+        }
+        return super.onOptionsItemSelected(item)
     }
     //выведение изменений на экран
     private  fun onChangeListener(dRef:DatabaseReference){
