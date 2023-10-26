@@ -20,8 +20,11 @@ import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
 /** обновляю версию до 34  с 33*/
 /**перешел на 11 java in project structure*/
-/**изменил версию котлин в уровне проекта на 1.7.1, была больше 1.7.20 кажется**/
+/**изменил версию котлин на  1.9.10 кажется**/
 //запустил синхрон грандла
+
+//implementation 'com.google.firebase:firebase-auth-ktx:22.1.2'
+//implementation 'androidx.core:core-ktx:1.7.1' c  последней на нее
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,10 +36,10 @@ class MainActivity : AppCompatActivity() {
         //подключение к бд
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setActionBar()
         auth=Firebase.auth
+        setActionBar()// запуск после аутентификации
         val database = Firebase.database
-        val myRef = database.getReference("message")
+        val myRef = database.getReference("сообщения")
         binding.bSend.setOnClickListener {
             //при нажатии на кнопку будет записываться в бд
             //данные из текстового поля превратили в стринг
@@ -68,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         private  fun setActionBar(){
             val ab=supportActionBar
             Thread{
+                //на второстепенном потоке загружаем картинку
                 val bMap = Picasso.get().load(auth.currentUser?.photoUrl).get()
                 val dIcon = BitmapDrawable(resources, bMap)
                 runOnUiThread {
