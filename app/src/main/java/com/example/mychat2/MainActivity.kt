@@ -3,6 +3,7 @@ package com.example.mychat2
 import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.widget.TextView
 import com.example.mychat2.databinding.ActivityMainBinding
 import com.example.mychat2.databinding.ActivitySignInBinding
@@ -47,6 +48,11 @@ class MainActivity : AppCompatActivity() {
         }
         //запуск слушателя нажатий на пити mRef
         onChangeListener(myRef)
+    }
+/** функция выведения меню на экран*/
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return super.onCreateOptionsMenu(menu)
+    menuInflater.inflate(R.menu.main_menu,menu)
     }
     //выведение изменений на экран
     private  fun onChangeListener(dRef:DatabaseReference){
