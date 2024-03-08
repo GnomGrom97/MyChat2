@@ -39,20 +39,20 @@ class MainActivity : AppCompatActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         auth=Firebase.auth
-        setActionBar()// запуск после аутентификации
+        setActionBar()// запуск верхней панели
         val database = Firebase.database
-        val myRef = database.getReference("message")
-        binding.bSend.setOnClickListener {
+        val myRef = database.getReference("message")//функция содания узлов-
+        binding.bSend.setOnClickListener {//слушатель нажатий
             //при нажатии на кнопку будет записываться в бд
             //данные из текстового поля превратили в стринг
-            myRef.setValue(binding.edMessage.text.toString())
+            myRef.setValue(binding.edMessage.text.toString())//информация передается в узел
         }
-        //запуск слушателя нажатий на пити mRef
-        onChangeListener(myRef)
+        //запуск слушателя нажатий на пути mRef
+        onChangeListener(myRef)//регистрируем слушатель
     }
 /** функция выведения меню на экран*/
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.main_menu,menu)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {//функция создания меню
+    menuInflater.inflate(R.menu.main_menu,menu)//передает индефикатор
         return super.onCreateOptionsMenu(menu)
     }
     /** function log out**/
@@ -64,12 +64,13 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
     //выведение изменений на экран
-    private  fun onChangeListener(dRef:DatabaseReference){
+    private  fun onChangeListener(dRef:DatabaseReference){//создаем функцию и передаем в нее инфу из database.getReference
         //слушатель постоянных нажатий
-        dRef.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
+        dRef.addValueEventListener(object : ValueEventListener{//addValueEventListener-прослугивает все на этом пути
+            override fun onDataChange(snapshot: DataSnapshot) {//метод когда изменяются данные
                //при изменении данных
                 binding.apply {
+                    //append записывает данные и не стирает предыдущие
                     rcView.append("\n")//переход на строку ниже
                     //полученное значение ппревращает в строку и передаем
                     rcView.append("Petr: ${snapshot.value.toString()}")
@@ -87,14 +88,14 @@ class MainActivity : AppCompatActivity() {
             val ab=supportActionBar
             Thread{
                 //на второстепенном потоке загружаем картинку
-                val bMap = Picasso.get().load(auth.currentUser?.photoUrl).get()
-                val dIcon = BitmapDrawable(resources, bMap)
-                runOnUiThread {
+                val bMap = Picasso.get().load(auth.currentUser?.photoUrl).get()//достаем картинку из гугл акка
+                // ?- тк может быть null
+                val dIcon = BitmapDrawable(resources, bMap)//превращаем bitmap в drawable
+                runOnUiThread {//запуск на основном потоке
                     //запуск картинки проекта
-                    ab?.setDisplayHomeAsUpEnabled(true)
-                    ab?.setHomeAsUpIndicator(dIcon)
-                   ab?.title = auth.currentUser?.displayName
-
+                    ab?.setDisplayHomeAsUpEnabled(true)//активация Homebutton верхней полоски
+                    ab?.setHomeAsUpIndicator(dIcon)//передаем суда картинку акка
+                   ab?.title = auth.currentUser?.displayName//передает название пользователя рядом с фото акка
                 }
             }.start()
         }
