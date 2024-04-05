@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
                     //запуск картинки проекта
                     ab?.setDisplayHomeAsUpEnabled(true)//активация Homebutton верхней полоски
                     ab?.setHomeAsUpIndicator(dIcon)//передаем суда картинку акка
-                   //ab?.title = auth.currentUser?.displayName//передает название пользователя рядом с фото акка
+                    ab?.title = auth.currentUser?.displayName//передает название пользователя рядом с фото акка
                 }
             }.start()
         }

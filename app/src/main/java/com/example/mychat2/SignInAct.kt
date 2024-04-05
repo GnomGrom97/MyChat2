@@ -149,7 +149,7 @@ class SignInAct : AppCompatActivity() {
                 .addOnCompleteListener {task->
                     if(task.isSuccessful){
                         //проверка с запусоком активити на вход
-                        val i= Intent(this,MainActivity2::class.java)
+                        val i= Intent(this,MainActivity::class.java)
                         startActivity(i)
                     }else{
                         Toast.makeText(this,task.exception?.message,Toast.LENGTH_SHORT).show()
