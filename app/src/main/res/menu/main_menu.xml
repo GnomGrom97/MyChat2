@@ -4,4 +4,7 @@
 
     <item android:title="Sign Out"
         android:id="@+id/sign_out"/>
+    <item android:title="Settings" />
+    <item android:title="Analitics" />
+    <item android:title="First " />
 </menu>

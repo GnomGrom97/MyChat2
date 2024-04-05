@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mychat2.databinding.ActivityMainBinding
 import com.example.mychat2.databinding.ActivitySignInBinding
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -32,6 +33,7 @@ import org.w3c.dom.Text
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var auth:FirebaseAuth
+    lateinit var adapter: UserAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,16 +41,25 @@ class MainActivity : AppCompatActivity() {
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         auth=Firebase.auth
-        setActionBar()// запуск верхней панели
+        setUpActionBar()// запуск верхней панели
         val database = Firebase.database
-        val myRef = database.getReference("message")//функция содания узлов-
+        //создаем генерацию каждый раз новую,чтобы не перезаписывать сообщение
+        val myRef = database.getReference("message")//функция содания узлов- в узле сообщений будут все сообщения
         binding.bSend.setOnClickListener {//слушатель нажатий
             //при нажатии на кнопку будет записываться в бд
             //данные из текстового поля превратили в стринг
-            myRef.setValue(binding.edMessage.text.toString())//информация передается в узел
+            //генерирует специальный ключ, унмкальный путь
+            myRef.child(myRef.push().key?:"blbbl").setValue(User(auth.currentUser?.displayName,binding.edMessage.text.toString()))//информация передается в узел
         }
         //запуск слушателя нажатий на пути mRef
         onChangeListener(myRef)//регистрируем слушатель
+        initRcView()//инициализация адаптара ниже
+
+    }
+    private  fun initRcView()=with(binding){
+    adapter  = UserAdapter()
+    rcView.layoutManager=LinearLayoutManager(this@MainActivity)//для отображения данных по вертикали
+    rcView.adapter = adapter //адаптер для заполнения rcView
     }
 /** функция выведения меню на экран*/
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {//функция создания меню
@@ -68,15 +79,15 @@ class MainActivity : AppCompatActivity() {
         //слушатель постоянных нажатий
         dRef.addValueEventListener(object : ValueEventListener{//addValueEventListener-прослугивает все на этом пути
             override fun onDataChange(snapshot: DataSnapshot) {//метод когда изменяются данные
-               //при изменении данных
-                binding.apply {
-                    //append записывает данные и не стирает предыдущие
-                    rcView.append("\n")//переход на строку ниже
-                    //полученное значение ппревращает в строку и передаем
-                    rcView.append("Petr: ${snapshot.value.toString()}")
-
+            //передает значения в лист
+            val list = ArrayList<User>()
+               for (s in snapshot.children){
+                   val user = s.getValue(User::class.java)
+                   if (user != null)list.add(user)
+               }
+            adapter.submitList(list )
                 }
-            }
+
 
             override fun onCancelled(error: DatabaseError) {
 
@@ -84,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         })
 }
         /** Функция подключения верхней панели**/
-        private  fun setActionBar(){
+        private  fun setUpActionBar(){
             val ab=supportActionBar
             Thread{
                 //на второстепенном потоке загружаем картинку
@@ -95,7 +106,7 @@ class MainActivity : AppCompatActivity() {
                     //запуск картинки проекта
                     ab?.setDisplayHomeAsUpEnabled(true)//активация Homebutton верхней полоски
                     ab?.setHomeAsUpIndicator(dIcon)//передаем суда картинку акка
-                   ab?.title = auth.currentUser?.displayName//передает название пользователя рядом с фото акка
+                   //ab?.title = auth.currentUser?.displayName//передает название пользователя рядом с фото акка
                 }
             }.start()
         }
